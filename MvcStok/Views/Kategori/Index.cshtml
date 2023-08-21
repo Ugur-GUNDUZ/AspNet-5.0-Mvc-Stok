@@ -1,0 +1,38 @@
+﻿@using MvcStok.Models.entity
+@*@model List<TblKategoriler>*@
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<TblKategoriler>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<a href="/Kategori/YeniKategori/" class="btn btn-primary" style="margin-bottom:10px;">Ekle</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Kategori İd</th>
+            <th>Kategori Adı</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+            <th>alert sil</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.KategoriId</td>
+                <td>@i.KategoriAd</td>
+                <td><a href="/Kategori/Sil/@i.KategoriId" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Kategori/Guncelle/@i.KategoriId" class="btn btn-success">Guncelle</a></td>
+                <td>@Html.ActionLink("butonismi","Sil", new { id=i.KategoriId }, new { @class = "btn btn-warning", onclick="return confirm('silmek istiyormusun')" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager((IPagedList)Model,sayfa=>Url.Action("Index", new { sayfa}))
+
+
